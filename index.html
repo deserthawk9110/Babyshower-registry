@@ -29,13 +29,13 @@
             background-color: var(--bg-color);
             color: var(--text-main);
             line-height: 1.6;
-            padding-bottom: 60px;
+            padding-bottom: 80px;
         }
 
-        /* Header / Invitation Style */
+        /* Header Accent Plant Elements */
         header {
             text-align: center;
-            padding: 60px 20px;
+            padding: 80px 20px 40px 20px;
             background: max-content;
             position: relative;
         }
@@ -50,7 +50,7 @@
 
         .names {
             font-family: 'Playfair Display', serif;
-            font-size: 3rem;
+            font-size: 3.2rem;
             font-weight: 700;
             margin-bottom: 5px;
             letter-spacing: 1px;
@@ -62,19 +62,24 @@
             letter-spacing: 3px;
             color: var(--sage);
             font-weight: 600;
-            margin-bottom: 25px;
+            margin-bottom: 30px;
         }
 
         .details {
             font-size: 1rem;
             max-width: 500px;
             margin: 0 auto;
-            border-top: 1px solid var(--terracotta);
-            border-bottom: 1px solid var(--terracotta);
-            padding: 15px 0;
+            border-top: 1px solid #E6E3DF;
+            border-bottom: 1px solid #E6E3DF;
+            padding: 20px 0;
+            color: #61554E;
         }
 
-        /* Registry Section */
+        .details p {
+            margin: 4px 0;
+        }
+
+        /* Registry Container */
         .container {
             max-width: 1100px;
             margin: 40px auto;
@@ -90,28 +95,29 @@
 
         .card {
             background: var(--white);
-            border-radius: 12px;
+            border-radius: 16px;
             overflow: hidden;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.03);
-            transition: transform 0.2s ease, box-shadow 0.2s ease;
+            box-shadow: 0 4px 20px rgba(61, 52, 46, 0.04);
+            transition: transform 0.25s ease, box-shadow 0.25s ease;
             display: flex;
             flex-direction: column;
+            border: 1px solid #F0EFEF;
         }
 
         .card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 8px 25px rgba(0,0,0,0.06);
+            transform: translateY(-6px);
+            box-shadow: 0 12px 30px rgba(61, 52, 46, 0.08);
         }
 
         .card-img {
             width: 100%;
-            height: 220px;
-            background-color: #F0EFEF;
+            height: 240px;
             object-fit: cover;
+            background-color: #F3F2F0;
         }
 
         .card-content {
-            padding: 20px;
+            padding: 24px;
             flex-grow: 1;
             display: flex;
             flex-direction: column;
@@ -120,15 +126,17 @@
 
         .item-title {
             font-family: 'Playfair Display', serif;
-            font-size: 1.25rem;
+            font-size: 1.3rem;
             font-weight: 600;
-            margin-bottom: 8px;
+            margin-bottom: 6px;
+            color: var(--text-main);
         }
 
         .item-price {
             color: var(--sage);
             font-weight: 600;
-            margin-bottom: 15px;
+            font-size: 1.05rem;
+            margin-bottom: 20px;
         }
 
         .btn {
@@ -137,14 +145,14 @@
             text-align: center;
             background-color: var(--sage);
             color: var(--white);
-            padding: 12px;
+            padding: 14px;
             border: none;
-            border-radius: 6px;
+            border-radius: 8px;
             font-size: 0.95rem;
             font-weight: 600;
             cursor: pointer;
             text-decoration: none;
-            transition: background 0.2s;
+            transition: background-color 0.2s ease;
         }
 
         .btn:hover {
@@ -152,12 +160,12 @@
         }
 
         .btn.claimed {
-            background-color: #E0E0E0;
-            color: #888888;
+            background-color: #ECEAE6;
+            color: #A39E99;
             cursor: not-allowed;
         }
 
-        /* Modal / Popup Styling */
+        /* Interactive Modal */
         .modal {
             display: none;
             position: fixed;
@@ -165,7 +173,8 @@
             left: 0;
             width: 100%;
             height: 100%;
-            background: rgba(61, 52, 46, 0.5);
+            background: rgba(61, 52, 46, 0.4);
+            backdrop-filter: blur(4px);
             justify-content: center;
             align-items: center;
             z-index: 1000;
@@ -174,38 +183,61 @@
 
         .modal-content {
             background: var(--white);
-            padding: 30px;
-            border-radius: 12px;
-            max-width: 500px;
+            padding: 40px 30px;
+            border-radius: 20px;
+            max-width: 480px;
             width: 100%;
             position: relative;
             text-align: center;
+            box-shadow: 0 20px 50px rgba(0,0,0,0.1);
         }
 
         .close-modal {
             position: absolute;
-            top: 15px;
-            right: 20px;
-            font-size: 1.5rem;
+            top: 20px;
+            right: 25px;
+            font-size: 1.8rem;
             cursor: pointer;
+            color: #A39E99;
+            transition: color 0.2s;
+        }
+
+        .close-modal:hover {
             color: var(--text-main);
         }
 
         .modal h3 {
             font-family: 'Playfair Display', serif;
-            margin-bottom: 15px;
-            font-size: 1.6rem;
+            margin-bottom: 12px;
+            font-size: 1.75rem;
+            color: var(--text-main);
         }
 
         .modal p {
-            margin-bottom: 20px;
+            margin-bottom: 25px;
             font-size: 0.95rem;
+            color: #61554E;
         }
 
-        /* Responsive adjustments */
+        .modal .btn-group {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        /* Footer styling */
+        footer {
+            text-align: center;
+            padding: 40px 20px;
+            font-size: 0.9rem;
+            color: #A39E99;
+            letter-spacing: 1px;
+        }
+
         @media (max-width: 600px) {
-            .names { font-size: 2.2rem; }
+            .names { font-size: 2.4rem; }
             .theme-title { font-size: 1.8rem; }
+            header { padding: 50px 20px 30px 20px; }
         }
     </style>
 </head>
@@ -216,8 +248,9 @@
         <div class="names">Adnan & Nabila</div>
         <div class="subtitle">Baby Shower Registry</div>
         <div class="details">
-            <p>Saturday, June 27, 2026 at 1:00 PM</p>
+            <p><strong>Saturday, June 27, 2026</strong> at 1:00 PM</p>
             <p>Villa 43C, 77B Street, Mirdif</p>
+            <p style="margin-top: 8px; font-size: 0.9rem; font-style: italic; color: var(--sage);">RSVP by 20th June to Nabila</p>
         </div>
     </header>
 
@@ -225,35 +258,90 @@
         <div class="registry-grid">
             
             <div class="card">
-                <img src="https://images.unsplash.com/photo-1522771739844-6a9f6d5f14af?auto=format&fit=crop&w=500&q=80" alt="Wooden Crib" class="card-img">
+                <img src="https://images.unsplash.com/photo-1591084728795-1149f32d9866?auto=format&fit=crop&w=600&q=80" alt="Compact Travel Stroller" class="card-img">
                 <div class="card-content">
                     <div>
-                        <h3 class="item-title">Wooden Nursery Crib</h3>
-                        <p class="item-price">AED 1,200</p>
+                        <h3 class="item-title">Compact Travel Stroller</h3>
+                        <p class="item-price">AED 1,450</p>
                     </div>
-                    <button class="btn" onclick="openRegistryModal('Wooden Nursery Crib', 'https://amazon.ae')">View & Gift Item</button>
+                    <button class="btn" onclick="openRegistryModal('Compact Travel Stroller', 'https://www.amazon.ae')">Gift This Item</button>
                 </div>
             </div>
 
             <div class="card">
-                <img src="https://images.unsplash.com/photo-1596870230751-ebdfce98ec42?auto=format&fit=crop&w=500&q=80" alt="Organic Cotton Swaddles" class="card-img">
+                <img src="https://images.unsplash.com/photo-1602417387431-7e8c339ff030?auto=format&fit=crop&w=600&q=80" alt="Ergonomic Baby Carrier" class="card-img">
                 <div class="card-content">
                     <div>
-                        <h3 class="item-title">Organic Cotton Swaddles</h3>
+                        <h3 class="item-title">Ergonomic Baby Carrier</h3>
+                        <p class="item-price">AED 550</p>
+                    </div>
+                    <button class="btn" onclick="openRegistryModal('Ergonomic Baby Carrier', 'https://www.amazon.ae')">Gift This Item</button>
+                </div>
+            </div>
+
+            <div class="card">
+                <img src="https://images.unsplash.com/photo-1508817628294-5a453fa0b8fb?auto=format&fit=crop&w=600&q=80" alt="Smart Sound Machine" class="card-img">
+                <div class="card-content">
+                    <div>
+                        <h3 class="item-title">Smart Sound Machine</h3>
+                        <p class="item-price">AED 280</p>
+                    </div>
+                    <button class="btn" onclick="openRegistryModal('Smart Sound Machine', 'https://www.amazon.ae')">Gift This Item</button>
+                </div>
+            </div>
+
+            <div class="card">
+                <img src="https://images.unsplash.com/photo-1522771739844-6a9f6d5f14af?auto=format&fit=crop&w=600&q=80" alt="Organic Swaddle Blankets" class="card-img">
+                <div class="card-content">
+                    <div>
+                        <h3 class="item-title">Organic Swaddle Sets</h3>
+                        <p class="item-price">AED 180</p>
+                    </div>
+                    <button class="btn" onclick="openRegistryModal('Organic Swaddle Sets', 'https://www.amazon.ae')">Gift This Item</button>
+                </div>
+            </div>
+
+            <div class="card">
+                <img src="https://images.unsplash.com/photo-1610389051254-6490696a090e?auto=format&fit=crop&w=600&q=80" alt="Silicone Weaning Set" class="card-img">
+                <div class="card-content">
+                    <div>
+                        <h3 class="item-title">Silicone Tableware Set</h3>
                         <p class="item-price">AED 150</p>
                     </div>
-                    <button class="btn" onclick="openRegistryModal('Organic Cotton Swaddles', 'https://amazon.ae')">View & Gift Item</button>
+                    <button class="btn" onclick="openRegistryModal('Silicone Tableware Set', 'https://www.amazon.ae')">Gift This Item</button>
                 </div>
             </div>
 
             <div class="card">
-                <img src="https://images.unsplash.com/photo-1544025162-d76694265947?auto=format&fit=crop&w=500&q=80" alt="Plush Puppy Toy" class="card-img">
+                <img src="https://images.unsplash.com/photo-1558089687-f282ffcbd1d5?auto=format&fit=crop&w=600&q=80" alt="HD Baby Monitor" class="card-img">
                 <div class="card-content">
                     <div>
-                        <h3 class="item-title">Plush Cuddly Puppy</h3>
-                        <p class="item-price">AED 95</p>
+                        <h3 class="item-title">HD Video Baby Monitor</h3>
+                        <p class="item-price">AED 620</p>
                     </div>
-                    <button class="btn claimed" disabled>Already Gifted ✓</button>
+                    <button class="btn" onclick="openRegistryModal('HD Video Baby Monitor', 'https://www.amazon.ae')">Gift This Item</button>
+                </div>
+            </div>
+
+            <div class="card">
+                <img src="https://images.unsplash.com/photo-1596870230751-ebdfce98ec42?auto=format&fit=crop&w=600&q=80" alt="Wooden Activity Gym" class="card-img">
+                <div class="card-content">
+                    <div>
+                        <h3 class="item-title">Wooden Play Gym</h3>
+                        <p class="item-price">AED 240</p>
+                    </div>
+                    <button class="btn" onclick="openRegistryModal('Wooden Play Gym', 'https://www.amazon.ae')">Gift This Item</button>
+                </div>
+            </div>
+
+            <div class="card">
+                <img src="https://images.unsplash.com/photo-1608571423902-eed4a5ad8108?auto=format&fit=crop&w=600&q=80" alt="Baby Skincare Kit" class="card-img">
+                <div class="card-content">
+                    <div>
+                        <h3 class="item-title">Newborn Skincare Kit</h3>
+                        <p class="item-price">AED 120</p>
+                    </div>
+                    <button class="btn" onclick="openRegistryModal('Newborn Skincare Kit', 'https://www.amazon.ae')">Gift This Item</button>
                 </div>
             </div>
 
@@ -264,14 +352,23 @@
         <div class="modal-content">
             <span class="close-modal" onclick="closeRegistryModal()">&times;</span>
             <h3 id="modalItemName">Item Name</h3>
-            <p>Thank you so much for wanting to gift us this item! Click below to purchase it directly from our preferred store, and it will be sent our way (or you can bring it along to Mirdif!).</p>
-            <a id="modalBuyBtn" href="#" target="_blank" class="btn" style="margin-bottom: 10px;">Go to Store</a>
-            <button class="btn" style="background-color: var(--terracotta);" onclick="alert('Thank you! This feature can be connected to a backend or form to mark items as claimed.')">Mark as Purchased</button>
+            <p>Thank you so much for celebrating this next chapter with us! You can view or purchase this item online, or bring it along to the shower in Mirdif.</p>
+            <div class="btn-group">
+                <a id="modalBuyBtn" href="#" target="_blank" class="btn">View Online Store</a>
+                <button class="btn" style="background-color: var(--terracotta);" onclick="handleClaimItem()">Mark as Gifted</button>
+            </div>
         </div>
     </div>
 
+    <footer>
+        <p>Thank you for your love and support. We can't wait to see you!</p>
+    </footer>
+
     <script>
+        let currentItemName = "";
+
         function openRegistryModal(itemName, purchaseUrl) {
+            currentItemName = itemName;
             document.getElementById('modalItemName').innerText = itemName;
             document.getElementById('modalBuyBtn').href = purchaseUrl;
             document.getElementById('registryModal').style.display = 'flex';
@@ -281,7 +378,11 @@
             document.getElementById('registryModal').style.display = 'none';
         }
 
-        // Close modal if user clicks outside the content box
+        function handleClaimItem() {
+            alert(`Thank you! You have selected "${currentItemName}". This site is static, so to formally reserve it and update the page layout, let Nabila know so it can be updated on the main guest list!`);
+            closeRegistryModal();
+        }
+
         window.onclick = function(event) {
             const modal = document.getElementById('registryModal');
             if (event.target == modal) {
