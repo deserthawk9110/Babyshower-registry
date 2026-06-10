@@ -1,394 +1,544 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Adnan & Nabila's Baby Registry</title>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400..700;1,400..700&family=Plus+Jakarta+Sans:wght@300;400;600&display=swap" rel="stylesheet">
-    
-    <style>
-        :root {
-            --bg-color: #F9F8F6;
-            --text-main: #3D342E;
-            --sage: #8FA89B;
-            --terracotta: #D1A17A;
-            --blush: #E3A89F;
-            --white: #FFFFFF;
-        }
+<!-- Adnan & Nabila's baby shower registry — single-file site, shared storage.
+     THEME TOKENS in :root. To tweak colours/fonts, edit only those + the font link. -->
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="color-scheme" content="light">
+<title>Adnan & Nabila · Baby Registry</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,600;1,9..144,500;1,9..144,600&family=Nunito:wght@400;600;700;800&family=Sacramento&display=swap" rel="stylesheet">
 
-        * {
-            box-sizing: border-box;
-            margin: 0;
-            padding: 0;
-        }
+<style>
+  :root{
+    color-scheme:light;
+    /* ---- THEME (from the invite: green & brown watercolor) ---- */
+    --paper:#f4efe2;        /* page */
+    --card:#fffdf7;         /* cards */
+    --sage:#8a9a7b;
+    --sage-deep:#5f6f52;
+    --brown:#5e4632;        /* headings / text */
+    --brown-soft:#8a7460;   /* secondary text */
+    --pink:#dba59d;         /* dusty rose accent */
+    --tan:#c7a878;
+    --gold-soft:#ece2cc;
+    --claimed:#788c62;      /* "covered" sage-green */
+    --claimed-soft:#edf0e4;
+    --line:#e6dcc8;
+    --shadow:0 12px 32px rgba(94,70,50,.10);
+    /* ---------------------------------------------------------- */
+    --script:"Sacramento", cursive;
+    --display:"Fraunces", Georgia, serif;
+    --body:"Nunito", system-ui, sans-serif;
+    --radius:18px;
+  }
+  *{box-sizing:border-box}
+  html,body{margin:0}
+  body{background:var(--paper);color:var(--brown);font-family:var(--body);font-size:16px;line-height:1.55;-webkit-font-smoothing:antialiased;-webkit-text-size-adjust:100%;overflow-x:hidden}
+  button{font-family:inherit;cursor:pointer}
+  :focus-visible{outline:3px solid var(--sage);outline-offset:2px;border-radius:6px}
 
-        body {
-            font-family: 'Plus Jakarta Sans', sans-serif;
-            background-color: var(--bg-color);
-            color: var(--text-main);
-            line-height: 1.6;
-            padding-bottom: 80px;
-        }
+  /* ---------- HERO ---------- */
+  .hero{position:relative;text-align:center;padding:54px 22px 92px;overflow:hidden;
+    background:radial-gradient(120% 90% at 50% 0%, #fffdf8 0%, var(--paper) 70%)}
+  .sprig{position:absolute;top:18px;width:170px;height:auto;opacity:.9}
+  .sprig.l{left:-8px}
+  .sprig.r{right:-8px;transform:scaleX(-1)}
+  .eyebrow{font-family:var(--body);font-weight:800;letter-spacing:.26em;text-transform:uppercase;font-size:.68rem;color:var(--sage-deep);margin:6px 0 4px}
+  .script{font-family:var(--script);font-size:clamp(2.6rem,9vw,4.4rem);line-height:.9;color:var(--brown);margin:6px 0 14px}
+  .names{font-family:var(--display);font-style:italic;font-weight:600;font-size:clamp(1.5rem,5vw,2.3rem);margin:0;color:var(--brown)}
+  .subtitle{font-family:var(--body);font-weight:800;letter-spacing:.2em;text-transform:uppercase;font-size:.8rem;color:var(--brown-soft);margin:6px 0 18px}
+  .details{display:inline-flex;flex-wrap:wrap;gap:6px 22px;justify-content:center;font-size:.95rem;color:var(--brown);max-width:40ch;margin:0 auto}
+  .details .d{display:flex;align-items:center;gap:7px}
+  .details b{font-weight:800}
+  .rsvp{margin:16px auto 0;font-size:.86rem;color:var(--brown-soft);max-width:42ch}
+  .wa-btn{display:inline-flex;align-items:center;gap:8px;background:var(--brown);color:#fff8ef;border:none;border-radius:999px;padding:12px 22px;font-weight:800;font-size:.92rem;text-decoration:none;box-shadow:0 8px 20px rgba(94,70,50,.18)}
+  .wa-btn:hover{filter:brightness(1.07)}
+  .teddy{width:104px;height:110px;display:block;margin:10px auto 2px}
+  .bob{transform-origin:center}
+  @keyframes bob{0%,100%{transform:translateY(0)}50%{transform:translateY(-7px)}}
+  @media (prefers-reduced-motion:no-preference){.bob{animation:bob 4.6s ease-in-out infinite}}
+  .float{position:absolute;opacity:.75;pointer-events:none}
+  .float.f1{top:120px;left:15%}
+  .float.f2{top:92px;right:17%}
+  .float.f3{bottom:104px;left:10%}
+  @media(max-width:600px){.float{display:none}}
+  .footer-scene{display:flex;flex-direction:column;align-items:center;gap:12px;text-align:center;margin:10px 0 28px}
+  .crib{width:min(330px,84%);height:auto}
+  .foot-note{color:var(--brown-soft);font-size:.92rem;margin:0}
+  .give{background:linear-gradient(180deg,#eef1e6,#fbf8f0);border:1px solid var(--line);border-radius:var(--radius);padding:26px 24px;text-align:center;margin:18px 0 6px}
+  .give h2{font-family:var(--display);font-style:italic;font-weight:600;color:var(--brown);font-size:1.35rem;margin:0 0 8px}
+  .give p{color:var(--brown);max-width:60ch;margin:0 auto;font-size:.95rem}
 
-        /* Header Accent Plant Elements */
-        header {
-            text-align: center;
-            padding: 80px 20px 40px 20px;
-            background: max-content;
-            position: relative;
-        }
+  /* ---------- LAYOUT ---------- */
+  .wrap{max-width:1060px;margin:0 auto;padding:0 18px}
+  .board{margin-top:-50px;position:relative;z-index:2}
+  .toolbar{background:var(--card);border:1px solid var(--line);border-radius:var(--radius);box-shadow:var(--shadow);padding:16px;display:flex;gap:12px;flex-wrap:wrap;align-items:center}
+  .count{font-weight:800;font-size:.95rem;margin-right:auto}
+  .count em{font-style:normal;color:var(--sage-deep)}
+  .search{flex:1 1 200px;min-width:160px;border:1px solid var(--line);border-radius:999px;padding:10px 16px;font-size:16px;background:var(--paper);color:var(--brown)}
+  .toggle{display:inline-flex;align-items:center;gap:8px;font-weight:700;font-size:.9rem;color:var(--brown-soft)}
+  .toggle input{width:18px;height:18px;accent-color:var(--claimed)}
 
-        .theme-title {
-            font-family: 'Playfair Display', serif;
-            font-style: italic;
-            font-size: 2.5rem;
-            color: var(--terracotta);
-            margin-bottom: 10px;
-        }
+  .chips{display:flex;gap:8px;flex-wrap:wrap;margin:18px 0 6px}
+  .chip{border:1px solid var(--line);background:var(--card);border-radius:999px;padding:7px 14px;font-size:.85rem;font-weight:700;color:var(--brown-soft)}
+  .chip[aria-pressed="true"]{background:var(--brown);color:#fff;border-color:var(--brown)}
 
-        .names {
-            font-family: 'Playfair Display', serif;
-            font-size: 3.2rem;
-            font-weight: 700;
-            margin-bottom: 5px;
-            letter-spacing: 1px;
-        }
+  /* ---------- GRID ---------- */
+  .grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(244px,1fr));gap:16px;margin:18px 0 40px}
+  .card{background:var(--card);border:1px solid var(--line);border-radius:var(--radius);padding:18px;display:flex;flex-direction:column;gap:5px;position:relative;transition:transform .15s ease,box-shadow .15s ease}
+  .card:hover{transform:translateY(-3px);box-shadow:var(--shadow)}
+  .card .ico{font-size:1.7rem;line-height:1}
+  .card .cat{align-self:flex-start;font-size:.64rem;font-weight:800;letter-spacing:.1em;text-transform:uppercase;color:var(--sage-deep);background:var(--gold-soft);border-radius:999px;padding:3px 9px;margin-top:4px}
+  .card h3{font-family:var(--display);font-weight:600;font-size:1.1rem;margin:6px 0 0;color:var(--brown)}
+  .card .brand{font-size:.84rem;color:var(--brown);font-weight:700}
+  .card .notes{font-size:.84rem;color:var(--brown-soft);margin:1px 0}
+  .card .price{font-size:.86rem;font-weight:800;color:var(--tan);margin-top:2px}
+  .card .pick{font-size:.7rem;font-weight:800;color:var(--pink);text-transform:uppercase;letter-spacing:.08em}
+  .card .actions{margin-top:auto;display:flex;gap:8px;padding-top:12px}
+  .btn{border-radius:999px;border:1px solid var(--line);background:var(--paper);padding:9px 12px;font-weight:800;font-size:.82rem;color:var(--brown);text-decoration:none;display:inline-flex;align-items:center;justify-content:center;gap:6px;flex:1;text-align:center}
+  .btn.primary{background:var(--brown);border-color:var(--brown);color:#fff8ef}
+  .btn.ghost{flex:0 0 auto}
+  .btn:hover{filter:brightness(.97)}
 
-        .subtitle {
-            font-size: 1.1rem;
-            text-transform: uppercase;
-            letter-spacing: 3px;
-            color: var(--sage);
-            font-weight: 600;
-            margin-bottom: 30px;
-        }
+  .card.is-claimed{background:var(--claimed-soft);border-color:#d9e0cc}
+  .card.is-claimed .ico,.card.is-claimed h3,.card.is-claimed .brand,.card.is-claimed .price{opacity:.5}
+  .claimed-tag{display:inline-flex;align-items:center;gap:6px;font-weight:800;font-size:.82rem;color:var(--claimed);background:#fff;border:1px solid #cfdcbf;border-radius:999px;padding:7px 12px;flex:1;justify-content:center}
 
-        .details {
-            font-size: 1rem;
-            max-width: 500px;
-            margin: 0 auto;
-            border-top: 1px solid #E6E3DF;
-            border-bottom: 1px solid #E6E3DF;
-            padding: 20px 0;
-            color: #61554E;
-        }
+  .owner-edit{position:absolute;top:12px;right:12px;border:none;background:transparent;font-size:1rem;opacity:.4}
+  .owner-edit:hover{opacity:1}
+  body:not(.owner) .owner-only{display:none!important}
 
-        .details p {
-            margin: 4px 0;
-        }
+  .footbar{display:flex;justify-content:center;gap:12px;flex-wrap:wrap;margin:6px 0 56px}
+  .linkbtn{background:none;border:none;color:var(--brown-soft);font-weight:700;font-size:.86rem;text-decoration:underline}
+  .add-btn{background:var(--brown);color:#fff8ef;border:none;border-radius:999px;padding:11px 20px;font-weight:800}
+  .empty{text-align:center;color:var(--brown-soft);padding:50px 20px}
 
-        /* Registry Container */
-        .container {
-            max-width: 1100px;
-            margin: 40px auto;
-            padding: 0 20px;
-        }
+  /* ---------- MODAL ---------- */
+  .scrim{position:fixed;inset:0;background:rgba(64,48,34,.5);display:none;align-items:center;justify-content:center;padding:18px;z-index:50}
+  .scrim.open{display:flex}
+  .modal{background:var(--card);border-radius:22px;max-width:440px;width:100%;padding:24px;box-shadow:0 30px 60px rgba(0,0,0,.28);max-height:90vh;overflow:auto}
+  .modal h2{font-family:var(--display);font-weight:600;margin:0 0 4px;font-size:1.4rem;color:var(--brown)}
+  .modal p.sub{color:var(--brown-soft);margin:0 0 16px;font-size:.9rem}
+  .field{margin-bottom:13px}
+  .field label{display:block;font-weight:800;font-size:.8rem;margin-bottom:5px;color:var(--brown)}
+  .field input,.field textarea{width:100%;border:1px solid var(--line);border-radius:12px;padding:11px 13px;font-size:16px;font-family:var(--body);background:var(--paper);color:var(--brown)}
+  .field textarea{min-height:60px;resize:vertical}
+  .modal .row{display:flex;gap:12px;margin-top:8px}
+  .modal .row .btn{flex:1}
+  .danger{color:#b4524b;background:none;border:none;font-weight:800;font-size:.85rem;text-decoration:underline;margin-top:6px}
+  .hint{font-size:.78rem;color:var(--brown-soft);margin-top:-4px}
 
-        .registry-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-            gap: 30px;
-            margin-top: 30px;
-        }
+  @media(max-width:600px){
+    .hero{padding:44px 16px 78px}
+    .sprig{width:90px;top:10px}
+    .sprig.l{left:-14px}
+    .sprig.r{right:-14px}
+    .script{margin:4px 0 10px}
+    .names{font-size:1.5rem}
+    .details{gap:4px 14px;font-size:.92rem}
+    .wrap{padding:0 14px}
+    .toolbar{flex-direction:column;align-items:stretch;gap:10px}
+    .count{margin-right:0;text-align:center}
+    .search{flex:0 0 auto;min-width:0;width:100%}
+    .toggle{justify-content:center}
+    .give{padding:22px 18px}
+    .grid{grid-template-columns:1fr;gap:13px}
+    .modal{padding:20px;border-radius:18px}
+    .footbar{flex-direction:column;align-items:center;gap:10px}
+    .add-btn,.linkbtn{width:100%;text-align:center}
+  }
+</style>
 
-        .card {
-            background: var(--white);
-            border-radius: 16px;
-            overflow: hidden;
-            box-shadow: 0 4px 20px rgba(61, 52, 46, 0.04);
-            transition: transform 0.25s ease, box-shadow 0.25s ease;
-            display: flex;
-            flex-direction: column;
-            border: 1px solid #F0EFEF;
-        }
+<div class="hero">
+  <!-- eucalyptus sprigs (signature watercolor motif, from the card) -->
+  <svg class="sprig l" viewBox="0 0 200 120" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+    <path d="M5 18 C70 30 130 55 185 100" stroke="#7c8f6b" stroke-width="2.4" fill="none" stroke-linecap="round"/>
+    <g fill="#8a9a7b">
+      <ellipse cx="40" cy="26" rx="15" ry="8" transform="rotate(-22 40 26)"/>
+      <ellipse cx="70" cy="36" rx="15" ry="8" transform="rotate(-18 70 36)"/>
+      <ellipse cx="100" cy="50" rx="15" ry="8" transform="rotate(-12 100 50)"/>
+      <ellipse cx="128" cy="66" rx="14" ry="8" transform="rotate(-6 128 66)"/>
+      <ellipse cx="152" cy="82" rx="13" ry="7" transform="rotate(2 152 82)"/>
+    </g>
+    <g fill="#a7b693">
+      <ellipse cx="55" cy="18" rx="12" ry="6.5" transform="rotate(-34 55 18)"/>
+      <ellipse cx="86" cy="28" rx="12" ry="6.5" transform="rotate(-30 86 28)"/>
+      <ellipse cx="116" cy="42" rx="12" ry="6.5" transform="rotate(-24 116 42)"/>
+    </g>
+  </svg>
+  <svg class="sprig r" viewBox="0 0 200 120" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+    <path d="M5 18 C70 30 130 55 185 100" stroke="#7c8f6b" stroke-width="2.4" fill="none" stroke-linecap="round"/>
+    <g fill="#8a9a7b">
+      <ellipse cx="40" cy="26" rx="15" ry="8" transform="rotate(-22 40 26)"/>
+      <ellipse cx="70" cy="36" rx="15" ry="8" transform="rotate(-18 70 36)"/>
+      <ellipse cx="100" cy="50" rx="15" ry="8" transform="rotate(-12 100 50)"/>
+      <ellipse cx="128" cy="66" rx="14" ry="8" transform="rotate(-6 128 66)"/>
+      <ellipse cx="152" cy="82" rx="13" ry="7" transform="rotate(2 152 82)"/>
+    </g>
+    <g fill="#a7b693">
+      <ellipse cx="55" cy="18" rx="12" ry="6.5" transform="rotate(-34 55 18)"/>
+      <ellipse cx="86" cy="28" rx="12" ry="6.5" transform="rotate(-30 86 28)"/>
+      <ellipse cx="116" cy="42" rx="12" ry="6.5" transform="rotate(-24 116 42)"/>
+    </g>
+  </svg>
 
-        .card:hover {
-            transform: translateY(-6px);
-            box-shadow: 0 12px 30px rgba(61, 52, 46, 0.08);
-        }
+  <p class="eyebrow" id="h-eyebrow">Please join us for</p>
+  <div class="script" id="h-script">Here we grow again!</div>
+  <p class="names" id="h-names">Adnan &amp; Nabila's</p>
+  <p class="subtitle" id="h-subtitle">Baby Shower</p>
+  <svg class="teddy bob" viewBox="0 0 120 122" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+    <circle cx="38" cy="32" r="14" fill="#b98b5e"/><circle cx="82" cy="32" r="14" fill="#b98b5e"/>
+    <circle cx="38" cy="32" r="7" fill="#dba59d"/><circle cx="82" cy="32" r="7" fill="#dba59d"/>
+    <circle cx="60" cy="46" r="26" fill="#c79a6b"/>
+    <ellipse cx="60" cy="54" rx="13" ry="10" fill="#efdcc2"/>
+    <circle cx="60" cy="50" r="3.4" fill="#5e4632"/>
+    <circle cx="51" cy="43" r="3" fill="#5e4632"/><circle cx="69" cy="43" r="3" fill="#5e4632"/>
+    <ellipse cx="60" cy="91" rx="28" ry="24" fill="#c79a6b"/>
+    <ellipse cx="60" cy="94" rx="15" ry="13" fill="#efdcc2"/>
+    <circle cx="33" cy="82" r="10" fill="#b98b5e"/><circle cx="87" cy="82" r="10" fill="#b98b5e"/>
+    <circle cx="45" cy="112" r="11" fill="#b98b5e"/><circle cx="75" cy="112" r="11" fill="#b98b5e"/>
+    <circle cx="45" cy="113" r="5" fill="#dba59d"/><circle cx="75" cy="113" r="5" fill="#dba59d"/>
+  </svg>
+  <p class="details" id="h-meta"><span class="d">Saturday 27 June 2026 · 1:00 PM</span><span class="d">Villa 43C, 77B Street, Mirdif, Dubai</span></p>
+  <p class="rsvp" id="h-rsvp">RSVP by 20 June to Nabila · +971 55 131 4844</p>
+  <svg class="float f1" width="20" height="20" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 20.3l-1.45-1.32C5.4 14.36 2 11.28 2 7.5 2 4.42 4.42 2 7.5 2c1.74 0 3.41.81 4.5 2.09C13.09 2.81 14.76 2 16.5 2 19.58 2 22 4.42 22 7.5c0 3.78-3.4 6.86-8.55 11.54z" fill="#dba59d"/></svg>
+  <svg class="float f2" width="16" height="16" viewBox="0 0 16 16" aria-hidden="true"><path d="M8 0c1 5 2 6 7 8-5 2-6 3-7 8-1-5-2-6-7-8 5-2 6-3 7-8z" fill="#cbb46a"/></svg>
+  <svg class="float f3" width="17" height="17" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 20.3l-1.45-1.32C5.4 14.36 2 11.28 2 7.5 2 4.42 4.42 2 7.5 2c1.74 0 3.41.81 4.5 2.09C13.09 2.81 14.76 2 16.5 2 19.58 2 22 4.42 22 7.5c0 3.78-3.4 6.86-8.55 11.54z" fill="#9aaa86"/></svg>
+</div>
 
-        .card-img {
-            width: 100%;
-            height: 240px;
-            object-fit: cover;
-            background-color: #F3F2F0;
-        }
-
-        .card-content {
-            padding: 24px;
-            flex-grow: 1;
-            display: flex;
-            flex-direction: column;
-            justify-content: space-between;
-        }
-
-        .item-title {
-            font-family: 'Playfair Display', serif;
-            font-size: 1.3rem;
-            font-weight: 600;
-            margin-bottom: 6px;
-            color: var(--text-main);
-        }
-
-        .item-price {
-            color: var(--sage);
-            font-weight: 600;
-            font-size: 1.05rem;
-            margin-bottom: 20px;
-        }
-
-        .btn {
-            display: inline-block;
-            width: 100%;
-            text-align: center;
-            background-color: var(--sage);
-            color: var(--white);
-            padding: 14px;
-            border: none;
-            border-radius: 8px;
-            font-size: 0.95rem;
-            font-weight: 600;
-            cursor: pointer;
-            text-decoration: none;
-            transition: background-color 0.2s ease;
-        }
-
-        .btn:hover {
-            background-color: #799487;
-        }
-
-        .btn.claimed {
-            background-color: #ECEAE6;
-            color: #A39E99;
-            cursor: not-allowed;
-        }
-
-        /* Interactive Modal */
-        .modal {
-            display: none;
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(61, 52, 46, 0.4);
-            backdrop-filter: blur(4px);
-            justify-content: center;
-            align-items: center;
-            z-index: 1000;
-            padding: 20px;
-        }
-
-        .modal-content {
-            background: var(--white);
-            padding: 40px 30px;
-            border-radius: 20px;
-            max-width: 480px;
-            width: 100%;
-            position: relative;
-            text-align: center;
-            box-shadow: 0 20px 50px rgba(0,0,0,0.1);
-        }
-
-        .close-modal {
-            position: absolute;
-            top: 20px;
-            right: 25px;
-            font-size: 1.8rem;
-            cursor: pointer;
-            color: #A39E99;
-            transition: color 0.2s;
-        }
-
-        .close-modal:hover {
-            color: var(--text-main);
-        }
-
-        .modal h3 {
-            font-family: 'Playfair Display', serif;
-            margin-bottom: 12px;
-            font-size: 1.75rem;
-            color: var(--text-main);
-        }
-
-        .modal p {
-            margin-bottom: 25px;
-            font-size: 0.95rem;
-            color: #61554E;
-        }
-
-        .modal .btn-group {
-            display: flex;
-            flex-direction: column;
-            gap: 12px;
-        }
-
-        /* Footer styling */
-        footer {
-            text-align: center;
-            padding: 40px 20px;
-            font-size: 0.9rem;
-            color: #A39E99;
-            letter-spacing: 1px;
-        }
-
-        @media (max-width: 600px) {
-            .names { font-size: 2.4rem; }
-            .theme-title { font-size: 1.8rem; }
-            header { padding: 50px 20px 30px 20px; }
-        }
-    </style>
-</head>
-<body>
-
-    <header>
-        <div class="theme-title">Here we grow again!</div>
-        <div class="names">Adnan & Nabila</div>
-        <div class="subtitle">Baby Shower Registry</div>
-        <div class="details">
-            <p><strong>Saturday, June 27, 2026</strong> at 1:00 PM</p>
-            <p>Villa 43C, 77B Street, Mirdif</p>
-            <p style="margin-top: 8px; font-size: 0.9rem; font-style: italic; color: var(--sage);">RSVP by 20th June to Nabila</p>
-        </div>
-    </header>
-
-    <main class="container">
-        <div class="registry-grid">
-            
-            <div class="card">
-                <img src="https://images.unsplash.com/photo-1591084728795-1149f32d9866?auto=format&fit=crop&w=600&q=80" alt="Compact Travel Stroller" class="card-img">
-                <div class="card-content">
-                    <div>
-                        <h3 class="item-title">Compact Travel Stroller</h3>
-                        <p class="item-price">AED 1,450</p>
-                    </div>
-                    <button class="btn" onclick="openRegistryModal('Compact Travel Stroller', 'https://www.amazon.ae')">Gift This Item</button>
-                </div>
-            </div>
-
-            <div class="card">
-                <img src="https://images.unsplash.com/photo-1602417387431-7e8c339ff030?auto=format&fit=crop&w=600&q=80" alt="Ergonomic Baby Carrier" class="card-img">
-                <div class="card-content">
-                    <div>
-                        <h3 class="item-title">Ergonomic Baby Carrier</h3>
-                        <p class="item-price">AED 550</p>
-                    </div>
-                    <button class="btn" onclick="openRegistryModal('Ergonomic Baby Carrier', 'https://www.amazon.ae')">Gift This Item</button>
-                </div>
-            </div>
-
-            <div class="card">
-                <img src="https://images.unsplash.com/photo-1508817628294-5a453fa0b8fb?auto=format&fit=crop&w=600&q=80" alt="Smart Sound Machine" class="card-img">
-                <div class="card-content">
-                    <div>
-                        <h3 class="item-title">Smart Sound Machine</h3>
-                        <p class="item-price">AED 280</p>
-                    </div>
-                    <button class="btn" onclick="openRegistryModal('Smart Sound Machine', 'https://www.amazon.ae')">Gift This Item</button>
-                </div>
-            </div>
-
-            <div class="card">
-                <img src="https://images.unsplash.com/photo-1522771739844-6a9f6d5f14af?auto=format&fit=crop&w=600&q=80" alt="Organic Swaddle Blankets" class="card-img">
-                <div class="card-content">
-                    <div>
-                        <h3 class="item-title">Organic Swaddle Sets</h3>
-                        <p class="item-price">AED 180</p>
-                    </div>
-                    <button class="btn" onclick="openRegistryModal('Organic Swaddle Sets', 'https://www.amazon.ae')">Gift This Item</button>
-                </div>
-            </div>
-
-            <div class="card">
-                <img src="https://images.unsplash.com/photo-1610389051254-6490696a090e?auto=format&fit=crop&w=600&q=80" alt="Silicone Weaning Set" class="card-img">
-                <div class="card-content">
-                    <div>
-                        <h3 class="item-title">Silicone Tableware Set</h3>
-                        <p class="item-price">AED 150</p>
-                    </div>
-                    <button class="btn" onclick="openRegistryModal('Silicone Tableware Set', 'https://www.amazon.ae')">Gift This Item</button>
-                </div>
-            </div>
-
-            <div class="card">
-                <img src="https://images.unsplash.com/photo-1558089687-f282ffcbd1d5?auto=format&fit=crop&w=600&q=80" alt="HD Baby Monitor" class="card-img">
-                <div class="card-content">
-                    <div>
-                        <h3 class="item-title">HD Video Baby Monitor</h3>
-                        <p class="item-price">AED 620</p>
-                    </div>
-                    <button class="btn" onclick="openRegistryModal('HD Video Baby Monitor', 'https://www.amazon.ae')">Gift This Item</button>
-                </div>
-            </div>
-
-            <div class="card">
-                <img src="https://images.unsplash.com/photo-1596870230751-ebdfce98ec42?auto=format&fit=crop&w=600&q=80" alt="Wooden Activity Gym" class="card-img">
-                <div class="card-content">
-                    <div>
-                        <h3 class="item-title">Wooden Play Gym</h3>
-                        <p class="item-price">AED 240</p>
-                    </div>
-                    <button class="btn" onclick="openRegistryModal('Wooden Play Gym', 'https://www.amazon.ae')">Gift This Item</button>
-                </div>
-            </div>
-
-            <div class="card">
-                <img src="https://images.unsplash.com/photo-1608571423902-eed4a5ad8108?auto=format&fit=crop&w=600&q=80" alt="Baby Skincare Kit" class="card-img">
-                <div class="card-content">
-                    <div>
-                        <h3 class="item-title">Newborn Skincare Kit</h3>
-                        <p class="item-price">AED 120</p>
-                    </div>
-                    <button class="btn" onclick="openRegistryModal('Newborn Skincare Kit', 'https://www.amazon.ae')">Gift This Item</button>
-                </div>
-            </div>
-
-        </div>
-    </main>
-
-    <div id="registryModal" class="modal">
-        <div class="modal-content">
-            <span class="close-modal" onclick="closeRegistryModal()">&times;</span>
-            <h3 id="modalItemName">Item Name</h3>
-            <p>Thank you so much for celebrating this next chapter with us! You can view or purchase this item online, or bring it along to the shower in Mirdif.</p>
-            <div class="btn-group">
-                <a id="modalBuyBtn" href="#" target="_blank" class="btn">View Online Store</a>
-                <button class="btn" style="background-color: var(--terracotta);" onclick="handleClaimItem()">Mark as Gifted</button>
-            </div>
-        </div>
+<div class="wrap">
+  <div class="board">
+    <div class="toolbar">
+      <span class="count" id="count"></span>
+      <input class="search" id="search" type="search" placeholder="Search gifts…" aria-label="Search gifts">
+      <label class="toggle"><input type="checkbox" id="hideClaimed"> Hide claimed gifts</label>
     </div>
+    <section class="give">
+      <h2 id="give-title">No gift necessary — but if you'd like to…</h2>
+      <p id="give-body">Your company on the day is the real gift. If you'd prefer to give another way, a cash contribution toward baby's first essentials is always warmly welcomed at the event. Anything from the registry below is just as appreciated — and for any questions, message Nabila anytime.</p>
+    </section>
+    <div class="chips" id="chips"></div>
+    <div class="grid" id="grid"></div>
+    <div class="empty" id="empty" style="display:none">No gifts match — try clearing the filters.</div>
+    <noscript><p class="empty">To see and claim gifts, open this page in a web browser (Safari or Chrome). A file preview can't load the list.</p></noscript>
+    <section class="footer-scene">
+      <svg class="crib" viewBox="0 0 340 200" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+        <!-- mobile -->
+        <line x1="170" y1="2" x2="170" y2="16" stroke="#c0b196" stroke-width="2"/>
+        <path d="M126 16 Q170 6 214 16" stroke="#c0b196" stroke-width="2" fill="none"/>
+        <line x1="132" y1="13" x2="132" y2="28" stroke="#c0b196" stroke-width="1.5"/>
+        <line x1="208" y1="13" x2="208" y2="28" stroke="#c0b196" stroke-width="1.5"/>
+        <path d="M132 28c.9 4 1.8 4.9 5.8 5.8-4 .9-4.9 1.8-5.8 5.8-.9-4-1.8-4.9-5.8-5.8 4-.9 4.9-1.8 5.8-5.8z" fill="#cbb46a"/>
+        <g fill="#cdd8c2"><circle cx="203" cy="32" r="5.5"/><circle cx="212" cy="32" r="4.5"/><circle cx="208" cy="29" r="4.5"/></g>
+        <!-- teddy peeking over the rail -->
+        <g transform="translate(170,50)">
+          <circle cx="-10" cy="-7" r="6" fill="#b98b5e"/><circle cx="10" cy="-7" r="6" fill="#b98b5e"/>
+          <circle cx="0" cy="1" r="13" fill="#c79a6b"/>
+          <ellipse cx="0" cy="5" rx="6.5" ry="5" fill="#efdcc2"/>
+          <circle cx="0" cy="2.5" r="1.8" fill="#5e4632"/>
+          <circle cx="-5" cy="-2" r="1.6" fill="#5e4632"/><circle cx="5" cy="-2" r="1.6" fill="#5e4632"/>
+        </g>
+        <!-- crib posts + rails -->
+        <rect x="44" y="58" width="12" height="112" rx="6" fill="#b98b5e"/>
+        <rect x="284" y="58" width="12" height="112" rx="6" fill="#b98b5e"/>
+        <rect x="44" y="60" width="252" height="12" rx="6" fill="#c8a36f"/>
+        <rect x="50" y="150" width="240" height="12" rx="6" fill="#c8a36f"/>
+        <!-- vertical bars -->
+        <g fill="#d3b07d">
+          <rect x="76" y="72" width="6" height="78" rx="3"/><rect x="104" y="72" width="6" height="78" rx="3"/>
+          <rect x="132" y="72" width="6" height="78" rx="3"/><rect x="202" y="72" width="6" height="78" rx="3"/>
+          <rect x="230" y="72" width="6" height="78" rx="3"/><rect x="258" y="72" width="6" height="78" rx="3"/>
+        </g>
+        <!-- mattress, blanket, pillow -->
+        <rect x="56" y="118" width="228" height="34" rx="8" fill="#f3ead7"/>
+        <path d="M56 134h120v10a8 8 0 0 1-8 8H64a8 8 0 0 1-8-8z" fill="#9aaa86"/>
+        <g fill="#eef1e6"><circle cx="74" cy="140" r="2"/><circle cx="96" cy="146" r="2"/><circle cx="120" cy="140" r="2"/><circle cx="146" cy="146" r="2"/><circle cx="86" cy="151" r="2"/></g>
+        <ellipse cx="234" cy="130" rx="26" ry="12" fill="#e7b9b2"/>
+        <!-- wheels -->
+        <circle cx="50" cy="174" r="7" fill="#8a7460"/><circle cx="50" cy="174" r="2.5" fill="#efe6d2"/>
+        <circle cx="290" cy="174" r="7" fill="#8a7460"/><circle cx="290" cy="174" r="2.5" fill="#efe6d2"/>
+        <!-- little potted plant beside the crib -->
+        <g transform="translate(306,150)">
+          <path d="M2 22h18l-3-15H5z" fill="#c08a5a"/>
+          <path d="M11 8C5 2 4-5 11-12 18-5 17 2 11 8z" fill="#8a9a7b"/>
+          <path d="M11 9C16 4 23 4 27-1 22 3 18 3 14 7z" fill="#a7b693"/>
+        </g>
+      </svg>
+      <p class="foot-note">Questions, RSVPs, or anything at all —</p>
+      <a class="wa-btn" id="foot-wa" target="_blank" rel="noopener">💬 Message Nabila on WhatsApp</a>
+    </section>
+    <div class="footbar">
+      <button class="add-btn owner-only" id="addBtn">＋ Add a gift</button>
+      <button class="add-btn owner-only" id="editHeaderBtn" style="background:var(--sage-deep)">Edit shower details</button>
+      <button class="linkbtn" id="ownerBtn">For Adnan &amp; Nabila · edit registry</button>
+      <button class="linkbtn owner-only" id="exitBtn">Done editing</button>
+    </div>
+  </div>
+</div>
 
-    <footer>
-        <p>Thank you for your love and support. We can't wait to see you!</p>
-    </footer>
+<!-- CLAIM MODAL -->
+<div class="scrim" id="claimScrim">
+  <div class="modal" role="dialog" aria-modal="true" aria-labelledby="claimTitle">
+    <h2 id="claimTitle">Bringing this gift?</h2>
+    <p class="sub" id="claimSub"></p>
+    <div class="field">
+      <label for="claimName">Your name (so Adnan &amp; Nabila can say thanks)</label>
+      <input id="claimName" placeholder="e.g. Haroon" maxlength="40">
+      <p class="hint">Optional — leave blank to claim anonymously.</p>
+    </div>
+    <div class="row">
+      <button class="btn" id="claimCancel">Cancel</button>
+      <button class="btn primary" id="claimConfirm">Yes, I'll bring it</button>
+    </div>
+  </div>
+</div>
 
-    <script>
-        let currentItemName = "";
+<!-- ITEM EDIT MODAL -->
+<div class="scrim" id="itemScrim">
+  <div class="modal" role="dialog" aria-modal="true" aria-labelledby="itemTitle">
+    <h2 id="itemTitle">Add a gift</h2>
+    <p class="sub">The Amazon link defaults to a UAE search — paste a specific product link if you have one.</p>
+    <div class="field"><label for="f-name">Gift name</label><input id="f-name" placeholder="e.g. Baby bath"></div>
+    <div class="row" style="margin-top:0">
+      <div class="field" style="flex:1"><label for="f-ico">Emoji</label><input id="f-ico" placeholder="🛁" maxlength="4"></div>
+      <div class="field" style="flex:2"><label for="f-cat">Category</label><input id="f-cat" placeholder="Bath" list="catlist"></div>
+    </div>
+    <datalist id="catlist"></datalist>
+    <div class="field"><label for="f-brand">Specific brand / model (optional)</label><input id="f-brand" placeholder="e.g. INGUNAR 4-in-1"></div>
+    <div class="field"><label for="f-price">Price (optional)</label><input id="f-price" placeholder="e.g. AED 245.00"></div>
+    <div class="field"><label for="f-notes">Note (optional)</label><textarea id="f-notes" placeholder="e.g. Grey, with mosquito net"></textarea></div>
+    <div class="field"><label for="f-link">Amazon.ae link</label><input id="f-link" placeholder="https://www.amazon.ae/…"></div>
+    <div class="row">
+      <button class="btn" id="itemCancel">Cancel</button>
+      <button class="btn primary" id="itemSave">Save gift</button>
+    </div>
+    <button class="danger" id="itemDelete" style="display:none">Remove this gift from the registry</button>
+  </div>
+</div>
 
-        function openRegistryModal(itemName, purchaseUrl) {
-            currentItemName = itemName;
-            document.getElementById('modalItemName').innerText = itemName;
-            document.getElementById('modalBuyBtn').href = purchaseUrl;
-            document.getElementById('registryModal').style.display = 'flex';
-        }
+<!-- HEADER MODAL -->
+<div class="scrim" id="headScrim">
+  <div class="modal" role="dialog" aria-modal="true" aria-labelledby="headTitle">
+    <h2 id="headTitle">Shower details</h2>
+    <p class="sub">This is the banner at the top of the page.</p>
+    <div class="field"><label for="h-f-eyebrow">Small line on top</label><input id="h-f-eyebrow"></div>
+    <div class="field"><label for="h-f-script">Script headline</label><input id="h-f-script"></div>
+    <div class="field"><label for="h-f-names">Names line</label><input id="h-f-names"></div>
+    <div class="field"><label for="h-f-subtitle">Subtitle</label><input id="h-f-subtitle"></div>
+    <div class="field"><label for="h-f-meta">Details (one per line)</label><textarea id="h-f-meta"></textarea></div>
+    <div class="field"><label for="h-f-rsvp">RSVP line</label><input id="h-f-rsvp"></div>
+    <div class="field"><label for="h-f-wa">WhatsApp number (digits only, with country code)</label><input id="h-f-wa" placeholder="971551314844"></div>
+    <div class="field"><label for="h-f-gtitle">"Other ways to give" heading</label><input id="h-f-gtitle"></div>
+    <div class="field"><label for="h-f-gbody">"Other ways to give" text</label><textarea id="h-f-gbody"></textarea></div>
+    <div class="field"><label for="h-f-pin">Edit code (keeps guests from editing)</label><input id="h-f-pin" maxlength="20"></div>
+    <p class="hint">Share this code only with the parents. Light lock, not real security.</p>
+    <div class="row">
+      <button class="btn" id="headCancel">Cancel</button>
+      <button class="btn primary" id="headSave">Save details</button>
+    </div>
+  </div>
+</div>
 
-        function closeRegistryModal() {
-            document.getElementById('registryModal').style.display = 'none';
-        }
+<script>
+const KEY = "registry:v3";
+const SHARED = true;
 
-        function handleClaimItem() {
-            alert(`Thank you! You have selected "${currentItemName}". This site is static, so to formally reserve it and update the page layout, let Nabila know so it can be updated on the main guest list!`);
-            closeRegistryModal();
-        }
+function mk(ico,cat,name,opts={}){
+  const id="i"+Math.random().toString(36).slice(2,9);
+  const link = opts.link || ("https://www.amazon.ae/s?k="+encodeURIComponent(opts.q||name));
+  return {id,ico,cat,name,brand:opts.brand||"",price:opts.price||"",pick:!!opts.pick,
+          notes:opts.notes||"",link,claimed:false,claimedBy:""};
+}
 
-        window.onclick = function(event) {
-            const modal = document.getElementById('registryModal');
-            if (event.target == modal) {
-                modal.style.display = 'none';
-            }
-        }
-    </script>
-</body>
-</html>
+const DEFAULT = {
+  meta:{
+    eyebrow:"Please join us for",
+    script:"Here we grow again!",
+    names:"Adnan & Nabila's",
+    subtitle:"Baby Shower",
+    meta:"Saturday 27 June 2026 · 1:00 PM\nVilla 43C, 77B Street, Mirdif, Dubai",
+    rsvp:"RSVP by 20 June to Nabila · +971 55 131 4844",
+    whatsapp:"971551314844",
+    giveTitle:"No gift necessary — but if you'd like to…",
+    giveBody:"Your company on the day is the real gift. If you'd prefer to give another way, a cash contribution toward baby's first essentials is always warmly welcomed at the event. Anything from the registry below is just as appreciated — and for any questions, message Nabila anytime.",
+    pin:"0000"
+  },
+  items:[
+    mk("🛏️","Sleep","Cot with wheels",{pick:true,brand:"INGUNAR 4-in-1 Bassinet / Bedside Sleeper",price:"AED 245.00",notes:"Grey · 6 adjustable heights",link:"https://amzn.eu/d/0d6HWs2K"}),
+    mk("🌙","Safety","Reflective swaddle",{pick:true,brand:"bebon Visibli Baby Strap (reflective panel)",price:"AED 169.09",notes:"Medium 3M–12M · White",link:"https://amzn.eu/d/0iDhIAci"}),
+    mk("📹","Monitor","Sense-U cam with smart sock",{pick:true,brand:"Sense-U Smart Sock + Monitor Bundle",price:"AED 1,199.99",notes:"Tracks sleep & heart rate · 1–12M",link:"https://amzn.eu/d/04RyCVV8"}),
+    mk("🤱","Feeding","Hands-free breast pump",{pick:true,brand:"Momcozy M5 (wearable, double)",notes:"Gray · 3 modes, 9 levels",link:"https://amzn.eu/d/0eee3Gaz"}),
+    mk("🎒","Care","Diaper bag",{pick:true,brand:"Lamroro unisex-baby Diaper Bag",price:"AED 91.85",notes:"Blue · folds into a portable bassinet",q:"Lamroro baby diaper bag"}),
+    mk("🛁","Bath","Baby bath",{q:"baby bath tub"}),
+    mk("🍼","Feeding","Anti-colic baby bottles",{q:"anti colic baby bottles"}),
+    mk("♨️","Feeding","Steriliser",{q:"baby bottle steriliser"}),
+    mk("☁️","Sleep","Swaddles",{q:"baby swaddle"}),
+    mk("👶","Feeding","Pacifiers",{q:"baby pacifier"}),
+    mk("👕","Clothing","Baby clothes",{q:"newborn baby clothes"}),
+    mk("🧢","Clothing","Baby beanie",{q:"newborn beanie hat"}),
+    mk("📦","Care","Pampers",{brand:"Pampers",q:"Pampers newborn"}),
+    mk("🗑️","Care","Diaper Genie",{brand:"Diaper Genie",q:"diaper genie"}),
+    mk("🚗","Travel","Car seat (360 swivel)",{q:"360 swivel baby car seat"}),
+    mk("💺","Travel","Booster seat",{q:"baby booster seat"}),
+    mk("🪞","Travel","Baby car mirror / camera",{q:"baby car mirror backseat"})
+  ]
+};
+
+let state=null, storageOK=true;
+const filter={q:"",cat:"All",hideClaimed:false};
+
+async function loadState(){
+  try{ if(window.storage){ const r=await window.storage.get(KEY,SHARED); state=r?JSON.parse(r.value):null; } }
+  catch(e){ state=null; }
+  if(!state){ state=JSON.parse(JSON.stringify(DEFAULT)); await persist(); }
+}
+async function persist(){
+  if(!storageOK||!window.storage){ storageOK=false; return; }
+  try{ await window.storage.set(KEY,JSON.stringify(state),SHARED); }
+  catch(e){ storageOK=false; console.warn("Storage unavailable; memory only",e); }
+}
+async function mutate(fn){
+  if(storageOK&&window.storage){ try{ const r=await window.storage.get(KEY,SHARED); if(r) state=JSON.parse(r.value);}catch(e){} }
+  fn(state); await persist(); render();
+}
+
+const $=s=>document.querySelector(s);
+const grid=$("#grid");
+function esc(s){return String(s??"").replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));}
+
+function render(){
+  const m=state.meta;
+  $("#h-eyebrow").textContent=m.eyebrow;
+  $("#h-script").textContent=m.script;
+  $("#h-names").textContent=m.names;
+  $("#h-subtitle").textContent=m.subtitle;
+  $("#h-meta").innerHTML=(m.meta||"").split("\n").map(l=><span class="d">${esc(l)}</span>).join("");
+  $("#h-rsvp").textContent=m.rsvp;
+  const waNum=(m.whatsapp||"").replace(/\D/g,"");
+  const waMsg=encodeURIComponent("Hi Nabila! 👋 I'm getting in touch about Adnan & Nabila's baby shower — ");
+  const waLink=waNum?("https://wa.me/"+waNum+"?text="+waMsg):"#";
+  $("#give-title").textContent=m.giveTitle||"";
+  $("#give-body").textContent=m.giveBody||"";
+  $("#foot-wa").href=waLink; $("#foot-wa").style.display=waNum?"inline-flex":"none";
+
+  const cats=["All",...Array.from(new Set(state.items.map(i=>i.cat).filter(Boolean)))];
+  $("#chips").innerHTML=cats.map(c=><button class="chip" data-cat="${esc(c)}" aria-pressed="${c===filter.cat}">${esc(c)}</button>).join("");
+  $("#catlist").innerHTML=cats.filter(c=>c!=="All").map(c=><option value="${esc(c)}">).join("");
+
+  let items=state.items.filter(i=>{
+    if(filter.cat!=="All"&&i.cat!==filter.cat) return false;
+    if(filter.hideClaimed&&i.claimed) return false;
+    if(filter.q){const h=(i.name+" "+i.brand+" "+i.notes+" "+i.cat).toLowerCase(); if(!h.includes(filter.q.toLowerCase()))return false;}
+    return true;
+  });
+  grid.innerHTML=items.map(cardHTML).join("");
+  $("#empty").style.display=items.length?"none":"block";
+  const open=state.items.filter(i=>!i.claimed).length;
+  $("#count").innerHTML=<em>${open}</em> of ${state.items.length} gifts still available;
+}
+
+function cardHTML(i){
+  const act=i.claimed
+    ? <span class="claimed-tag">✓ Covered${i.claimedBy? by ${esc(i.claimedBy)}`:""}</span>
+       <button class="btn ghost" data-unclaim="${i.id}" title="Un-claim">↺</button>`
+    : `<a class="btn" href="${esc(i.link)}" target="_blank" rel="noopener">View on Amazon ↗️</a>
+       <button class="btn primary" data-claim="${i.id}">I'll bring this</button>`;
+  return `<article class="card ${i.claimed?'is-claimed':''}">
+    <button class="owner-edit owner-only" data-edit="${i.id}" title="Edit gift">✎</button>
+    <div class="ico">${esc(i.ico||"🎁")}</div>
+    ${i.cat?<span class="cat">${esc(i.cat)}</span>:""}
+    ${i.pick?<span class="pick">★ Parents' pick</span>:""}
+    <h3>${esc(i.name)}</h3>
+    ${i.brand?<div class="brand">${esc(i.brand)}</div>:""}
+    ${i.notes?<div class="notes">${esc(i.notes)}</div>:""}
+    ${i.price?<div class="price">${esc(i.price)}</div>:""}
+    <div class="actions">${act}</div>
+  </article>`;
+}
+
+$("#search").addEventListener("input",e=>{filter.q=e.target.value;render();});
+$("#hideClaimed").addEventListener("change",e=>{filter.hideClaimed=e.target.checked;render();});
+$("#chips").addEventListener("click",e=>{const b=e.target.closest(".chip");if(!b)return;filter.cat=b.dataset.cat;render();});
+
+grid.addEventListener("click",e=>{
+  const c=e.target.closest("[data-claim]"), u=e.target.closest("[data-unclaim]"), ed=e.target.closest("[data-edit]");
+  if(c) openClaim(c.dataset.claim);
+  if(u) mutate(s=>{const it=s.items.find(x=>x.id===u.dataset.unclaim);if(it){it.claimed=false;it.claimedBy="";}});
+  if(ed&&document.body.classList.contains("owner")) openItem(ed.dataset.edit);
+});
+
+let claimId=null;
+function openClaim(id){
+  claimId=id; const it=state.items.find(x=>x.id===id);
+  $("#claimSub").textContent=it?${it.name}${it.brand? — ${it.brand}:""}. It'll be marked as covered so no one doubles up.:"";
+  $("#claimName").value=""; openScrim("#claimScrim"); $("#claimName").focus();
+}
+$("#claimConfirm").addEventListener("click",async()=>{
+  const n=$("#claimName").value.trim();
+  await mutate(s=>{const it=s.items.find(x=>x.id===claimId);if(it){it.claimed=true;it.claimedBy=n;}});
+  closeScrim("#claimScrim");
+});
+$("#claimCancel").addEventListener("click",()=>closeScrim("#claimScrim"));
+
+let itemId=null;
+function openItem(id){
+  itemId=id; const it=id?state.items.find(x=>x.id===id):null;
+  $("#itemTitle").textContent=it?"Edit gift":"Add a gift";
+  $("#f-name").value=it?it.name:""; $("#f-ico").value=it?it.ico:""; $("#f-cat").value=it?it.cat:"";
+  $("#f-brand").value=it?it.brand:""; $("#f-price").value=it?it.price:""; $("#f-notes").value=it?it.notes:""; $("#f-link").value=it?it.link:"";
+  $("#itemDelete").style.display=it?"block":"none";
+  openScrim("#itemScrim"); $("#f-name").focus();
+}
+$("#addBtn").addEventListener("click",()=>openItem(null));
+$("#itemCancel").addEventListener("click",()=>closeScrim("#itemScrim"));
+$("#itemSave").addEventListener("click",async()=>{
+  const name=$("#f-name").value.trim(); if(!name){$("#f-name").focus();return;}
+  const d={ico:$("#f-ico").value.trim()||"🎁",cat:$("#f-cat").value.trim(),name,
+    brand:$("#f-brand").value.trim(),price:$("#f-price").value.trim(),notes:$("#f-notes").value.trim(),
+    link:$("#f-link").value.trim()||("https://www.amazon.ae/s?k="+encodeURIComponent(name))};
+  await mutate(s=>{
+    if(itemId) Object.assign(s.items.find(x=>x.id===itemId),d);
+    else s.items.push({id:"i"+Math.random().toString(36).slice(2,9),...d,pick:false,claimed:false,claimedBy:""});
+  });
+  closeScrim("#itemScrim");
+});
+$("#itemDelete").addEventListener("click",async()=>{
+  if(!confirm("Remove this gift from the registry?"))return;
+  await mutate(s=>{s.items=s.items.filter(x=>x.id!==itemId);}); closeScrim("#itemScrim");
+});
+
+$("#editHeaderBtn").addEventListener("click",()=>{
+  const m=state.meta;
+  $("#h-f-eyebrow").value=m.eyebrow;$("#h-f-script").value=m.script;$("#h-f-names").value=m.names;
+  $("#h-f-subtitle").value=m.subtitle;$("#h-f-meta").value=m.meta;$("#h-f-rsvp").value=m.rsvp;
+  $("#h-f-wa").value=m.whatsapp||"";$("#h-f-gtitle").value=m.giveTitle||"";$("#h-f-gbody").value=m.giveBody||"";$("#h-f-pin").value=m.pin;
+  openScrim("#headScrim");
+});
+$("#headCancel").addEventListener("click",()=>closeScrim("#headScrim"));
+$("#headSave").addEventListener("click",async()=>{
+  await mutate(s=>{s.meta.eyebrow=$("#h-f-eyebrow").value;s.meta.script=$("#h-f-script").value;s.meta.names=$("#h-f-names").value;
+    s.meta.subtitle=$("#h-f-subtitle").value;s.meta.meta=$("#h-f-meta").value;s.meta.rsvp=$("#h-f-rsvp").value;
+    s.meta.whatsapp=$("#h-f-wa").value.replace(/\D/g,"");s.meta.giveTitle=$("#h-f-gtitle").value;s.meta.giveBody=$("#h-f-gbody").value;
+    s.meta.pin=$("#h-f-pin").value||"0000";});
+  closeScrim("#headScrim");
+});
+
+$("#ownerBtn").addEventListener("click",()=>{
+  const c=prompt("Enter the parents' edit code:"); if(c===null)return;
+  if(c===state.meta.pin) document.body.classList.add("owner");
+  else alert("That code didn't match. (Default is 0000 until you change it.)");
+});
+$("#exitBtn").addEventListener("click",()=>document.body.classList.remove("owner"));
+
+function openScrim(s){$(s).classList.add("open");}
+function closeScrim(s){$(s).classList.remove("open");}
+document.querySelectorAll(".scrim").forEach(sc=>sc.addEventListener("click",e=>{if(e.target===sc)sc.classList.remove("open");}));
+document.addEventListener("keydown",e=>{if(e.key==="Escape")document.querySelectorAll(".scrim.open").forEach(s=>s.classList.remove("open"));});
+
+(async function(){
+  try{ await loadState(); }
+  catch(e){ state=JSON.parse(JSON.stringify(DEFAULT)); }
+  if(!state) state=JSON.parse(JSON.stringify(DEFAULT));
+  try{ render(); }catch(e){ console.error(e); }
+})();
+</script>
